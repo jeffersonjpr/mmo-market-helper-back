@@ -3,7 +3,7 @@ from ..database import session
 
 
 class ItemRepository:
-    def create_item(self, name, description, category_id, type_id=None):
+    def create_item(self, name, description, category_id=None, type_id=None):
         item = Item(name=name, description=description,
                     category_id=category_id, type_id=type_id)
         session.add(item)

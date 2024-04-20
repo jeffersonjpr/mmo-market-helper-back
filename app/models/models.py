@@ -22,7 +22,7 @@ class Item(Base):
     name = Column(String, unique=True)
     description = Column(String)
     category_id = Column(Integer, ForeignKey('categories.id'), nullable=True)
-    type_id = Column(Integer, ForeignKey('types.id'))
+    type_id = Column(Integer, ForeignKey('types.id'), nullable=True)
 
     category = relationship("Category", back_populates="items")
     type = relationship("Type", back_populates="items")

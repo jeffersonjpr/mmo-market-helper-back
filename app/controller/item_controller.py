@@ -8,14 +8,14 @@ class ItemController:
     def create_item(self):
         name = request.json['name']
         description = request.json['description']
-        category_id = request.json['category_id']
+        category_id = request.json.get('category_id')
         type_id = request.json.get('type_id')
         item = self.item_service.create_item(name, description, category_id, type_id)
-        return jsonify(item.serialize())
+        return jsonify(item)
 
     def read_item(self, item_id):
         item = self.item_service.read_item(item_id)
-        return jsonify(item.serialize())
+        return jsonify(item.to_dict())
 
     def update_item(self, item_id):
         new_name = request.json.get('name')
