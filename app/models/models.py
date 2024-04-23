@@ -4,10 +4,17 @@ from sqlalchemy.orm import relationship
 
 Base = declarative_base()
 
+
 class Category(Base):
     __tablename__ = 'categories'
     id = Column(Integer, primary_key=True)
     name = Column(String, unique=True)
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'name': self.name
+        }
 
 
 class Type(Base):
@@ -53,17 +60,33 @@ class Recipe(Base):
     item = relationship("Item", foreign_keys=[item_id])
     ingredient = relationship("Item", foreign_keys=[ingredient_id])
 
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'item_id': self.item_id,
+            'ingredient_id': self.ingredient_id,
+            'quantity': self.quantity
+        }
+
 
 class Market(Base):
     __tablename__ = 'market'
     id = Column(Integer, primary_key=True)
-    item_id = Column(Integer, ForeignKey('items.id'))
-    price = Column(Numeric)
-    stack_size = Column(Integer)
+    item_id = Column(Integer, ForeignKey('items.id'), nullable=False)
+    price = Column(Numeric, nullable=False)
+    stack_size = Column(Integer, nullable=False)
 
     item = relationship("Item", back_populates="market")
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'item_id': self.item_id,
+            'price': str(self.price),
+            'stack_size': self.stack_size
+        }
+
 
 Category.items = relationship("Item", back_populates="category")
 Type.items = relationship("Item", back_populates="type")
 Item.market = relationship("Market", back_populates="item")
-

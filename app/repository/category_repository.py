@@ -1,30 +1,31 @@
-from models.models import Category
-from database import session
+from ..models.models import Category
+from ..database import session
 
-def create_category(name):
-    category = Category(name=name)
-    session.add(category)
-    session.commit()
-    return category
-
-
-def read_category(category_id):
-    return session.query(Category).filter(Category.id == category_id).first()
-
-
-def update_category(category_id, new_name):
-    category = read_category(category_id)
-    if category:
-        category.name = new_name
+class CategoryRepository:
+    def create(self, name):
+        category = Category(name=name)
+        session.add(category)
         session.commit()
-        return True
-    return False
+        return category
 
+    def get(self, category_id):
+        return session.query(Category).filter(Category.id == category_id).first()
+    
+    def get_all(self):
+        return session.query(Category).all()
 
-def delete_category(category_id):
-    category = read_category(category_id)
-    if category:
-        session.delete(category)
-        session.commit()
-        return True
-    return False
+    def update(self, category_id, new_name):
+        category = self.get(category_id)
+        if category:
+            category.name = new_name
+            session.commit()
+            return True
+        return False
+
+    def delete(self, category_id):
+        category = self.get(category_id)
+        if category:
+            session.delete(category)
+            session.commit()
+            return True
+        return False
