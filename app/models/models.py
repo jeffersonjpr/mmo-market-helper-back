@@ -15,6 +15,12 @@ class Type(Base):
     id = Column(Integer, primary_key=True)
     name = Column(String, unique=True)
 
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'name': self.name
+        }
+
 
 class Item(Base):
     __tablename__ = 'items'
@@ -26,6 +32,15 @@ class Item(Base):
 
     category = relationship("Category", back_populates="items")
     type = relationship("Type", back_populates="items")
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'name': self.name,
+            'description': self.description,
+            'category_id': self.category_id,
+            'type_id': self.type_id
+        }
 
 
 class Recipe(Base):

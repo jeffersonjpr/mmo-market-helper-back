@@ -5,26 +5,30 @@ class ItemController:
     def __init__(self):
         self.item_service = ItemService()
 
-    def create_item(self):
+    def create(self):
         name = request.json['name']
         description = request.json['description']
         category_id = request.json.get('category_id')
         type_id = request.json.get('type_id')
-        item = self.item_service.create_item(name, description, category_id, type_id)
-        return jsonify(item)
-
-    def read_item(self, item_id):
-        item = self.item_service.read_item(item_id)
+        item = self.item_service.create(name, description, category_id, type_id)
         return jsonify(item.to_dict())
 
-    def update_item(self, item_id):
+    def get(self, item_id):
+        item = self.item_service.get(item_id)
+        return jsonify(item.to_dict())
+
+    def get_all(self):
+        items = self.item_service.get_all()
+        return jsonify([item.to_dict() for item in items])
+
+    def update(self, item_id):
         new_name = request.json.get('name')
         new_description = request.json.get('description')
         new_category_id = request.json.get('category_id')
         new_type_id = request.json.get('type_id')
-        success = self.item_service.update_item(item_id, new_name, new_description, new_category_id, new_type_id)
+        success = self.item_service.update(item_id, new_name, new_description, new_category_id, new_type_id)
         return jsonify({'success': success})
 
-    def delete_item(self, item_id):
-        success = self.item_service.delete_item(item_id)
+    def delete(self, item_id):
+        success = self.item_service.delete(item_id)
         return jsonify({'success': success})

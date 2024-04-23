@@ -4,17 +4,21 @@ from ..controller.item_controller import ItemController
 item_route = Blueprint('item_route', __name__)
 
 @item_route.route('/item', methods=['POST'])
-def create_item():
-    return ItemController().create_item()
+def create():
+    return ItemController().create()
 
 @item_route.route('/item/<int:item_id>', methods=['GET'])
-def read_item(item_id):
-    return ItemController().read_item(item_id)
+def get(item_id):
+    return ItemController().get(item_id)
+
+@item_route.route('/item', methods=['GET'])
+def get_all():
+    return ItemController().get_all()
 
 @item_route.route('/item/<int:item_id>', methods=['PUT'])
-def update_item(item_id):
-    return ItemController().update_item(item_id)
+def update(item_id):
+    return ItemController().update(item_id)
 
 @item_route.route('/item/<int:item_id>', methods=['DELETE'])
-def delete_item(item_id):
-    return ItemController().delete_item(item_id)
+def delete(item_id):
+    return ItemController().delete(item_id)
