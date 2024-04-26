@@ -1,6 +1,7 @@
 from ..models.models import Category
 from ..database import session
 
+
 class CategoryRepository:
     def create(self, name):
         category = Category(name=name)
@@ -10,9 +11,12 @@ class CategoryRepository:
 
     def get(self, category_id):
         return session.query(Category).filter(Category.id == category_id).first()
-    
+
     def get_all(self):
         return session.query(Category).all()
+    
+    def get_by_name(self, name):
+        return session.query(Category).filter(Category.name == name).first()
 
     def update(self, category_id, new_name):
         category = self.get(category_id)

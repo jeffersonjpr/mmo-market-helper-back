@@ -1,5 +1,6 @@
 from ..database import session
 
+
 class BaseRepository:
     def create(self, model):
         session.add(model)

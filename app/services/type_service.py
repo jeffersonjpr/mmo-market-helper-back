@@ -1,5 +1,6 @@
 from ..repository.type_repository import TypeRepository
 
+
 class TypeService:
     def __init__(self):
         self.type_repository = TypeRepository()
@@ -9,10 +10,10 @@ class TypeService:
 
     def get(self, type_id):
         return self.type_repository.get(type_id)
-    
+
     def get_all(self):
         return self.type_repository.get_all()
-    
+
     def get_by_name(self, name):
         return self.type_repository.get_by_name(name)
 
