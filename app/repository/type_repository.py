@@ -1,19 +1,23 @@
 from ..models.models import Type
 from ..database import session
+from .base_repository import BaseRepository
 
+class TypeRepository(BaseRepository):
+    def __init__(self):
+        self.model = Type
 
-class TypeRepository:
     def create(sefl, name):
         type = Type(name=name)
-        session.add(type)
-        session.commit()
-        return type
-
+        return super().create(type)
+    
     def get(self, type_id):
-        return session.query(Type).filter(Type.id == type_id).first()
+        super().get(type_id)
     
     def get_all(self):
-        return session.query(Type).all()
+        return super().get_all()
+    
+    def get_by_name(self, name):
+        return session.query(Type).filter(Type.name == name).first()
 
     def update(self, type_id, new_name):
         type = self.get(type_id)
